@@ -4,10 +4,10 @@ class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
-    cpf = db.Column(db.String(11), nullable=False)
-    phone = db.Column(db.String(13), nullable=False)
-    phone_contact = db.Column(db.String(13), nullable=False)
-    id_account = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
+    cpf = db.Column(db.String(11), nullable=False, unique=True)
+    phone = db.Column(db.String(13), nullable=True)
+    phone_contact = db.Column(db.String(13), nullable=True)
+    id_account = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False, unique=True)
     account = db.relationship('Account')
 
     def __init__(self, name, date_of_birth, cpf, phone, phone_contact, id_account):

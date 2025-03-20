@@ -24,14 +24,13 @@ class StateVSPhoto(db.Model):
 
 class VS(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    highway = db.Column(db.String(100), nullable=False)
+    highway_id = db.Column(db.Integer, db.ForeignKey('highway.id'), nullable=False)
+    highway = db.relationship('Highway')
     km = db.Column(db.Float, nullable=False)
-    route = db.Column(db.String(100), nullable=False)
-    city = db.Column(db.String(100), nullable=False)
-    state = db.Column(db.String(100), nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
-    regional = db.Column(db.String(255), nullable=False)
+    regional_id = db.Column(db.Integer, db.ForeignKey('regional.id'), nullable=False)
+    regional = db.relationship('Regional')
     sense = db.Column(db.String(100), nullable=False)
     side = db.Column(db.String(100), nullable=False)
     date_register = db.Column(db.Date, nullable=False)
@@ -42,16 +41,13 @@ class VS(db.Model):
     type_of_support = db.Column(db.String(100), nullable=False)
     plate_code = db.Column(db.String(100), nullable=False)
 
-    def __init__(self, highway, km, route, city, state, latitude, longitude, regional, sense, side,
+    def __init__(self, highway_id, km, latitude, longitude, regional_id, sense, side,
                  date_register, id_account_register, board_type, sheet_material, type_of_support, plate_code):
-        self.highway = highway
+        self.highway_id = highway_id
         self.km = km
-        self.route = route
-        self.city = city
-        self.state = state
         self.latitude = latitude
         self.longitude = longitude
-        self.regional = regional
+        self.regional_id = regional_id
         self.sense = sense
         self.side = side
         self.date_register = date_register
@@ -64,19 +60,15 @@ class VS(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'highway': self.highway,
+            'highway': self.highway.to_dict() if self.highway_id else None,
             'km': self.km,
-            'route': self.route,
-            'city': self.city,
-            'state': self.state,
             'latitude': self.latitude,
             'longitude': self.longitude,
-            'regional': self.regional,
+            'regional': self.regional.to_dict() if self.highway_id else None,
             'sense': self.sense,
             'side': self.side,
             'date_register': self.date_register,
-            'id_account_register': self.id_account_register,
-            'account_register': self.account_register.to_dict() if self.account_register else None,
+            'account_register': self.account_register.to_dict() if self.id_account_register else None,
             'board_type': self.board_type,
             'sheet_material': self.sheet_material,
             'type_of_support': self.type_of_support,
