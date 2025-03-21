@@ -17,7 +17,7 @@ class Team(db.Model):
         return {
             'id': self.id,
             'employee_one': self.employee_one.to_dict(),
-            'employee_two': self.employee_two.to_dict(),
+            'employee_two': self.employee_two.to_dict() if self.employee_two else None,
             'date_register': self.date_register
         }
 
