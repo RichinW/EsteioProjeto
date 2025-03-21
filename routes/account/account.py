@@ -83,3 +83,17 @@ def list_account():
     accounts = Account.query.all()
     accounts_list = [account.to_dict() for account in accounts]
     return jsonify({'accounts': accounts_list})
+
+
+@account_bp.route("/deleteusuario/<int:id>", methods=['DELETE'])
+@jwt_required()
+def delete_account(id):
+    account = Account.query.get(id)
+
+    if account:
+        db.session.delete(account)
+        db.session.commit()
+
+        return jsonify({"message": "Usuário deletado com sucesso!"})
+    else:
+        return jsonify({"message": "Erro ao deletar usuário"})

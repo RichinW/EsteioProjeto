@@ -68,3 +68,16 @@ def register_mission():
 
     except ValidationError as err:
         return jsonify(err.messages), 400
+
+@mission_bp.route("/deletemissao/<int:id>", methods=['DELETE'])
+@jwt_required()
+def delete_mission(id):
+    mission = Mission.query.get(id)
+
+    if mission:
+        db.session.delete(mission)
+        db.session.commit()
+
+        return jsonify({"message": "Missão deletada com sucesso!"})
+    else:
+        return jsonify({"message": "Erro ao deletar missão"})

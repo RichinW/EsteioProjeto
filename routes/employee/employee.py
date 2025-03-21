@@ -57,3 +57,15 @@ def register_employee():
     except Exception as err:
         return jsonify(err), 400
 
+@employee_bp.route("/deletefuncionario/<int:id>", methods=['DELETE'])
+@jwt_required()
+def delete_employee(id):
+    employee = Employee.query.get(id)
+
+    if employee:
+        db.session.delete(employee)
+        db.session.commit()
+
+        return jsonify({"message": "Funcionário deletado com sucesso!"})
+    else:
+        return jsonify({"message": "Erro ao deletar funcionário"})

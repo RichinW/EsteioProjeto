@@ -183,3 +183,16 @@ def register_sv():
     db.session.commit()
 
     return jsonify({"message": "Cadastro realizado com sucesso!"}), 201
+
+@production_bp.route("/deleteproducao/<int:id>", methods=['DELETE'])
+@jwt_required()
+def delete_production(id):
+    production = Production.query.get(id)
+
+    if production:
+        db.session.delete(production)
+        db.session.commit()
+
+        return jsonify({"message": "Produção deletada com sucesso!"})
+    else:
+        return jsonify({"message": "Erro ao deletar produção"})

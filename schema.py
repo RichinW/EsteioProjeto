@@ -33,7 +33,7 @@ def validate_password(password):
 
 class TeamSchema(Schema):
     id_employee_one = fields.Int(required=True)
-    id_employee_two = fields.Int(required=True)
+    id_employee_two = fields.Int(required=False)
 
 class AccountRegisterSchema(Schema):
     username = fields.String(required=True, validate=validate.Length(min=3))
