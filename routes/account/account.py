@@ -19,7 +19,7 @@ def login():
         validated_data = login_schema.load(login_data)
     except ValidationError as err:
         return jsonify(err.messages), 400
-    username = validated_data['username']
+    username = validated_data['username'].strip()
     password = validated_data['password']
     account = Account.query.filter_by(username=username).first()
     if account and account.verification_password(password):
