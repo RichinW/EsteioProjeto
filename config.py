@@ -13,7 +13,7 @@ from routes.regional import regional_bp
 from routes.team import team_bp
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://esteio-site.onrender.com/"}}, supports_credentials=True, expose_headers=["Authorization"])
+CORS(app, resources={r"/*": {"origins": "https://esteio-site.onrender.com"}}, supports_credentials=True, expose_headers=["Authorization"])
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
