@@ -85,7 +85,7 @@ class ProductionSchema(Schema):
     total_elements = fields.Int(required=True)
     state_highway = fields.Str(required=True, validate=validate.Length(max=100))
     observation = fields.Str(missing=None)
-    verification_status = EnumField(StatusVerification, by_value=True, missing=None)
+    verification_status = fields.Str(missing=None)
     verification_observation = fields.Str(missing=None)
 
     @staticmethod

@@ -17,7 +17,7 @@ class Production(db.Model):
     total_elements = db.Column(db.Integer, nullable=False)
     state_highway = db.Column(db.String(100), nullable=False)
     observation = db.Column(db.Text, nullable=True)
-    verification_status = db.Column(db.String, nullable=True)
+    verification_status = db.Column(db.String(100), nullable=True)
     verification_observation = db.Column(db.Text, nullable=True)
 
     def __init__(self, date, mission_id, highway_id, km_start, km_end, total_elements, state_highway,
