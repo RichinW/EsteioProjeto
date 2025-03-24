@@ -7,7 +7,7 @@ from functions.utils import process_message
 import datetime
 from schema import VSSchema, ProductionSchema
 from extensions import db
-
+from functions.utils import generate_message
 production_bp = Blueprint('production', __name__)
 
 
@@ -24,9 +24,8 @@ def list_production(min, max):
 
     return jsonify({'productions': production_list, 'total_items': total_items})
 
-from flask import request, jsonify
 
-@production_bp.route('/listaproducao/<int:min>/<int:max>', methods=['GET'])
+"""@production_bp.route('/listaproducao/<int:min>/<int:max>', methods=['GET'])
 @jwt_required()
 def list_filter_production(min, max):
     query = Production.query
@@ -57,7 +56,7 @@ def list_filter_production(min, max):
 
     production_list = [production.to_dict() for production in productions]
 
-    return jsonify({'productions': production_list, 'total_items': total_items})
+    return jsonify({'productions': production_list, 'total_items': total_items})"""
 
 
 @production_bp.route('/listaproducao/type/<string:type>/<int:min>/<int:max>', methods=['GET'])
@@ -129,10 +128,9 @@ def register_production_app():
             state_highway=validated_data['state_highway'],
             observation=validated_data.get('observation'),
         )
-        db.session.add(new_production)
-        db.session.commit()
+        message = generate_message(new_production)
 
-        return jsonify({'mensagem': 'Produção cadastrado com sucesso!'}), 201
+        return jsonify({'mensagem': 'Produção cadastrado com sucesso!', "retorno_message": message}), 201
     except Exception as err:
         return jsonify(err), 400
 
