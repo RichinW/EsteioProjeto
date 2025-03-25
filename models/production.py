@@ -1,6 +1,5 @@
 from extensions import db
 from sqlalchemy import Enum
-from models.enums import StatusVerification
 from models.mission import Mission
 from models.regional import Highway
 
@@ -21,7 +20,7 @@ class Production(db.Model):
     verification_observation = db.Column(db.Text, nullable=True)
 
     def __init__(self, date, mission_id, highway_id, km_start, km_end, total_elements, state_highway,
-                 observation, verification_status='', verification_observation=''):
+                 observation, verification_status=None, verification_observation=''):
         self.date = date
         self.mission_id = mission_id
         self.highway_id = highway_id

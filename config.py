@@ -13,11 +13,11 @@ from routes.regional import regional_bp
 from routes.team import team_bp
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://esteio-site.onrender.com"}}, supports_credentials=True, expose_headers=["Authorization"])
+CORS(app, resources={r"/*": {"origins": ["https://esteio-site.onrender.com", "http://localhost:3000"]}}, supports_credentials=True, expose_headers=["Authorization"])
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'mysql+pymysql://root:@localhost:3306/esteio')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "@@Der1234")
 jwt = JWTManager(app)
 
 db.init_app(app)

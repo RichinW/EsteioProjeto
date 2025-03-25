@@ -1,7 +1,6 @@
 from marshmallow import Schema, fields, validate, ValidationError, validates_schema, post_load
 import re
 from marshmallow_enum import EnumField
-from models.enums import StatusVerification
 
 class CPFField(fields.String):
     def _deserialize(self, value, attr, data, **kwargs):
