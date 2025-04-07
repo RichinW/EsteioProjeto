@@ -21,11 +21,7 @@ class Production(db.Model):
     verified_amount = db.Column(db.Integer)
 
     def __init__(self, date, mission_id, highway_id, km_start, km_end, total_elements, state_highway,
-<<<<<<< HEAD
-                 observation, verification_status=None, verification_observation=''):
-=======
-                 observation, verified_amount, verification_status='', verification_observation=''):
->>>>>>> b88040c (alteração rota)
+                 observation, verified_amount, verification_status=None, verification_observation=''):
         self.date = date
         self.mission_id = mission_id
         self.highway_id = highway_id
