@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="3b3aafe9-29e2-411b-9316-0be407df685c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
@@ -13,6 +14,21 @@
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+=======
+    <list default="true" id="3b3aafe9-29e2-411b-9316-0be407df685c" name="Changes" comment="Requirements">
+      <change afterPath="$PROJECT_DIR$/models/departament.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/position.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/employee.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/employee.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/mission.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/mission.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/production.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/auth/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/mission/mission.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/mission/mission.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/production/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/production/production.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/schema.py" afterDir="false" />
+>>>>>>> b88040c (alteração rota)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,10 +82,13 @@
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;versao2.0&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/richa/PycharmProjects/esteioAPI&quot;
+<<<<<<< HEAD
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Usuário/Desktop/ProjetosDesenvolvimentoEsteio/EsteioProjeto&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+=======
+>>>>>>> b88040c (alteração rota)
   }
 }</component>
   <component name="RecentsManager">
@@ -88,7 +107,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
+<<<<<<< HEAD
       <option name="WORKING_DIRECTORY" value="C:\Users\Usuário\Desktop\ProjetosDesenvolvimentoEsteio\EsteioProjeto" />
+=======
+      <option name="SDK_NAME" value="Python 3.13 virtualenv at C:\Users\Usuário\Desktop\ProjetosDesenvolvimentoEsteio\EsteioProjeto\.venv" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+>>>>>>> b88040c (alteração rota)
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />

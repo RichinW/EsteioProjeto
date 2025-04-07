@@ -66,14 +66,7 @@ def generate_message(production):
     regional = Regional.query.get(mission.regional_id)
     highway = Highway.query.get(production.highway_id)
     team = Team.query.get(mission.team_id)
-    message = f'''
-        Diário de Campo
-        Data: {production.date}
-        Equipe: {team.employee_one.name}''' + (f' e {team.employee_two.name}' if team.employee_two else '') + f'''
-        Regional: {regional.name}
-        Atividade: {mission.activity}
-        Auditoria: {mission.audit}\n
-        Tipo: {mission.type}
+    message = f'''        
         {highway.name} Km {format_km(production.km_start)} ao Km {format_km(production.km_end)}
         Total de elementos: {production.total_elements}
         Situação: {production.state_highway}
