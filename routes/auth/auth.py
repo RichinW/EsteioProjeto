@@ -35,3 +35,15 @@ def get_account_info():
     else:
         return jsonify({"message": "Funcionário não encontrado!"}), 404
 
+@auth_bp.after_request
+def refresh_expiring_jwt(response):
+    try:
+        verify_jwt_in_request(optional=True)
+        identity = get_jwt_identity()
+        if identity:
+            new_token = create_access_token(identity=identity)
+
+            response.headers['Authorization'] = f'Bearer {new_token}'
+    except Exception:
+        pass
+    return response

@@ -27,12 +27,15 @@ def list_all_mission():
     mission_list = [mission.to_dict() for mission in missions]
     return jsonify({'missions': mission_list})
 
-@mission_bp.route('/listamissao/<int:min>', methods=['GET'])
-@jwt_required(id)
-def list_my_mission():
-    missions = Mission.query.all()
-    mission_list = [mission.to_dict() for mission in missions]
-    return jsonify({'missions': mission_list})
+
+@mission_bp.route('/listamissao/<int:id>', methods=['GET'])
+@jwt_required()
+def list_id_mission(id):
+    mission = Mission.query.get(id)
+    if mission is None:
+        return jsonify({'message': 'Mission not found'}), 404
+
+    return jsonify({'mission': mission.to_dict()})
 
 @mission_bp.route("/cadastromissao", methods=['POST'])
 @jwt_required()
@@ -52,8 +55,6 @@ def register_mission():
             audit=validated_data["audit"],
             activity=validated_data["activity"],
             type=validated_data["type"],
-            km_start=validated_data["km_start"],
-            km_end=validated_data["km_end"],
             start_date=validated_data["start_date"],
             end_date=validated_data["end_date"],
             regional_id=validated_data["id_regional"],

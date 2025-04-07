@@ -2,6 +2,10 @@ from flask import jsonify, Blueprint, request
 from flask_jwt_extended import jwt_required
 from marshmallow import ValidationError
 from models.vs import VS
+from models.mission import Mission
+from sqlalchemy.orm import aliased
+from models.team import Team
+from models.employee import Employee
 from models.production import Production
 from functions.utils import process_message
 import datetime
@@ -15,6 +19,28 @@ production_bp = Blueprint('production', __name__)
 @jwt_required()
 def list_production(min, max):
     query = Production.query
+
+    total_items = query.count()
+
+    productions = query.offset(min).limit(max - min).all()
+
+    production_list = [production.to_dict() for production in productions]
+
+    return jsonify({'productions': production_list, 'total_items': total_items})
+
+@production_bp.route('/listaproducao/<int:employee_id>/<string:date>/<int:min>/<int:max>', methods=['GET'])
+@jwt_required()
+def list_id_date_production(employee_id, date, min, max):
+
+    employee_one_alias = aliased(Employee)
+    employee_two_alias = aliased(Employee)
+
+    query = Production.query.join(Mission).join(Team)
+
+    query = query.filter(
+        (Team.employee_one.has(Employee.id == employee_id)) |
+        (Team.employee_two.has(Employee.id == employee_id))
+    ).filter(Production.date == date)
 
     total_items = query.count()
 
@@ -128,9 +154,11 @@ def register_production_app():
             state_highway=validated_data['state_highway'],
             observation=validated_data.get('observation'),
         )
-        message = generate_message(new_production)
 
-        return jsonify({'mensagem': 'Produção cadastrado com sucesso!', "retorno_message": message}), 201
+        db.session.add(new_production)
+        db.session.commit()
+
+        return jsonify({'message': 'Produção cadastrado com sucesso!'}), 201
     except Exception as err:
         return jsonify(err), 400
 
@@ -185,12 +213,33 @@ def register_sv():
 @production_bp.route("/deleteproducao/<int:id>", methods=['DELETE'])
 @jwt_required()
 def delete_production(id):
-    production = Production.query.get(id)
+    try:
+        production = Production.query.get(id)
 
-    if production:
-        db.session.delete(production)
-        db.session.commit()
+        if production:
+            db.session.delete(production)
+            db.session.commit()
 
-        return jsonify({"message": "Produção deletada com sucesso!"})
-    else:
-        return jsonify({"message": "Erro ao deletar produção"})
+            return jsonify({"message": "Produção deletada com sucesso!"})
+        else:
+            return jsonify({"message": "Produção não encontrada"})
+    except ValidationError as err:
+        return ({"message": "Erro ao deletar produção", "error": err})
+
+@production_bp.route("/editarproducao/alterarverificacao/<int:id>", methods=['PUT'])
+def alter_verification(id):
+    data = request.get_json()
+
+    try:
+        production = Production.query.get(id)
+        if production:
+            print(data)
+            production.verified_amount = data.get("verified_amount", production.verified_amount)
+            production.verification_status = data.get("verification_status", production.verification_status)
+
+            db.session.commit()
+            return jsonify({'message': 'Alterado com sucesso'})
+        else:
+            return jsonify({"message": 'Produção não encontrada'})
+    except ValidationError as err:
+        return jsonify({'message': 'Erro ao alterar verificação', 'error': err})
