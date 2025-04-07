@@ -1,6 +1,5 @@
 from extensions import db
 from sqlalchemy import Enum
-from models.enums import StatusVerification
 from models.mission import Mission
 from models.regional import Highway
 
@@ -17,11 +16,12 @@ class Production(db.Model):
     total_elements = db.Column(db.Integer, nullable=False)
     state_highway = db.Column(db.String(100), nullable=False)
     observation = db.Column(db.Text, nullable=True)
-    verification_status = db.Column(Enum(StatusVerification), nullable=True)
+    verification_status = db.Column(db.String(100), nullable=True)
     verification_observation = db.Column(db.Text, nullable=True)
+    verified_amount = db.Column(db.Integer)
 
     def __init__(self, date, mission_id, highway_id, km_start, km_end, total_elements, state_highway,
-                 observation, verification_status='', verification_observation=''):
+                 observation, verified_amount, verification_status=None, verification_observation=''):
         self.date = date
         self.mission_id = mission_id
         self.highway_id = highway_id
@@ -33,6 +33,7 @@ class Production(db.Model):
         self.observation = observation
         self.verification_status = verification_status
         self.verification_observation = verification_observation
+        self.verified_amount = verified_amount
 
     def to_dict(self):
         return {
@@ -47,5 +48,6 @@ class Production(db.Model):
             'state_highway': self.state_highway,
             'observation': self.observation,
             'verification_status': self.verification_status,
-            'verification_observation': self.verification_observation
+            'verification_observation': self.verification_observation,
+            'verified_amount': self.verified_amount
         }

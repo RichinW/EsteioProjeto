@@ -1,4 +1,7 @@
 import re
+from models.mission import Mission
+from models.regional import Highway, Regional
+from models.team import Team
 
 def process_message(message, activity):
     date = re.search(r"Data:\s*(\d{2}/\d{2}/\d{4})", message)
@@ -52,3 +55,20 @@ def process_message(message, activity):
             })
 
     return total_data
+
+def format_km(km_value):
+    km_int = int(km_value)
+    meters = int((km_value - km_int) * 1000)
+    return f"{km_int:03d}+{meters:03d}"
+
+def generate_message(production):
+    mission = Mission.query.get(production.mission_id)
+    regional = Regional.query.get(mission.regional_id)
+    highway = Highway.query.get(production.highway_id)
+    team = Team.query.get(mission.team_id)
+    message = f'''        
+        {highway.name} Km {format_km(production.km_start)} ao Km {format_km(production.km_end)}
+        Total de elementos: {production.total_elements}
+        Situação: {production.state_highway}
+    '''
+    return message

@@ -1,7 +1,6 @@
 from marshmallow import Schema, fields, validate, ValidationError, validates_schema, post_load
 import re
 from marshmallow_enum import EnumField
-from models.enums import StatusVerification
 
 class CPFField(fields.String):
     def _deserialize(self, value, attr, data, **kwargs):
@@ -85,7 +84,7 @@ class ProductionSchema(Schema):
     total_elements = fields.Int(required=True)
     state_highway = fields.Str(required=True, validate=validate.Length(max=100))
     observation = fields.Str(missing=None)
-    verification_status = EnumField(StatusVerification, by_value=True, missing=None)
+    verification_status = fields.Str(missing=None)
     verification_observation = fields.Str(missing=None)
 
     @staticmethod
@@ -112,8 +111,6 @@ class MissionSchema(Schema):
     audit = fields.Int(required=True)
     activity = fields.String(required=True)
     type = fields.String(required=True)
-    km_start = fields.Float(required=True)
-    km_end = fields.Float(required=True)
     start_date = fields.String(required=True)
     end_date = fields.String(required=True)
     id_regional = fields.Int(required=True)
