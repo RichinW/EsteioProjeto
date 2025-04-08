@@ -84,6 +84,13 @@ def list_account():
     accounts_list = [account.to_dict() for account in accounts]
     return jsonify({'accounts': accounts_list})
 
+@account_bp.route('/listausuario/vazio', methods=['GET'])
+@jwt_required()
+def list_account_clear():
+    accounts = db.session.query(Account).outerjoin(Employee, Account.id == Employee.id_account).filter(Employee.id == None).all()
+    accounts_list = [account.to_dict() for account in accounts]
+    return jsonify({'accounts': accounts_list})
+
 
 @account_bp.route("/deleteusuario/<int:id>", methods=['DELETE'])
 @jwt_required()

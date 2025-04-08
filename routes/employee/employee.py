@@ -49,6 +49,15 @@ def register_employee():
             phone=validated_data['phone'],
             phone_contact=validated_data['phone_contact'],
             id_account=validated_data['id_account'],
+            id_branch=validated_data['id_branch'],
+            id_position=validated_data['id_position'],
+            id_department=validated_data['id_department'],
+            regular_medication=validated_data['regular_medication'],
+            medical_condition=validated_data['medical_condition'],
+            allergy=validated_data['allergy'],
+            address=validated_data['address'],
+            blood_type=validated_data['blood_type'],
+            date_of_hire=validated_data['date_of_hire']
         )
         db.session.add(new_employee)
         db.session.commit()

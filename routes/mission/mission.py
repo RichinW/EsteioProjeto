@@ -20,6 +20,19 @@ def list_mission(min, max):
 
     return jsonify({'missions': mission_list, 'total_items': total_items})
 
+@mission_bp.route('/listamissao/active', methods=['GET'])
+@jwt_required()
+def list_mission_active(min, max):
+    query = Mission.query.filter_by(active=True)
+
+    total_items = query.count()
+
+    missions = query.offset(min).limit(max - min).all()
+
+    mission_list = [mission.to_dict() for mission in missions]
+
+    return jsonify({'missions': mission_list, 'total_items': total_items})
+
 @mission_bp.route('/listamissao', methods=['GET'])
 @jwt_required()
 def list_all_mission():
@@ -31,6 +44,15 @@ def list_all_mission():
 @mission_bp.route('/listamissao/<int:id>', methods=['GET'])
 @jwt_required()
 def list_id_mission(id):
+    mission = Mission.query.get(id)
+    if mission is None:
+        return jsonify({'message': 'Mission not found'}), 404
+
+    return jsonify({'mission': mission.to_dict()})
+
+@mission_bp.route('/listamissao/active/<int:id>', methods=['GET'])
+@jwt_required()
+def list_id_mission_active(id):
     mission = Mission.query.get(id)
     if mission is None:
         return jsonify({'message': 'Mission not found'}), 404

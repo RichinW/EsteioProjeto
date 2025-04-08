@@ -1,9 +1,10 @@
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt, verify_jwt_in_request, create_access_token
 from flask import jsonify, Blueprint
 from models.account import Account
 from models.employee import Employee
 from models.team import Team
 from models.mission import Mission
+from datetime import datetime, timezone, timedelta
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route("/protected", methods=["GET"])
@@ -40,10 +41,18 @@ def refresh_expiring_jwt(response):
     try:
         verify_jwt_in_request(optional=True)
         identity = get_jwt_identity()
-        if identity:
-            new_token = create_access_token(identity=identity)
+        if not identity:
+            return response
 
-            response.headers['Authorization'] = f'Bearer {new_token}'
-    except Exception:
-        pass
+        exp_timestamp = get_jwt().get("exp")
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))  # Ajuste o tempo como quiser
+
+        if exp_timestamp < target_timestamp:
+            new_token = create_access_token(identity=identity)
+            response.headers["Authorization"] = f"Bearer {new_token}"
+
+    except Exception as e:
+        # Se quiser logar o erro para depuração
+        print(f"Erro ao renovar token: {e}")
     return response

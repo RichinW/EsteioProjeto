@@ -30,3 +30,13 @@ def list_all_regional():
     regionais = Regional.query.all()
     regional_list = [regional.to_dict() for regional in regionais]
     return jsonify({'regionais': regional_list})
+
+
+@regional_bp.route('/listaregional/<int:id>', methods=['GET'])
+@jwt_required()
+def get_highways_by_regional(id):
+    regional = Regional.query.get(id)
+    if not regional:
+        return {'error': 'Regional não encontrada'}, 404
+    regional_list = [highway.to_dict() for highway in regional.highways]
+    return jsonify({'regionais': regional_list})

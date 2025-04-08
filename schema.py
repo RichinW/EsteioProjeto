@@ -105,6 +105,16 @@ class EmployeeSchema(Schema):
     phone = fields.String(required=False, validate=validate_phone)
     phone_contact = fields.String(required=False, validate=validate_phone)
     id_account = fields.Int(required=True)
+    id_department = fields.Int(required=True)
+    id_branch = fields.Int(required=True)
+    id_position = fields.Int(required=True)
+    gender = fields.String(required=False)
+    address = fields.String(required=True)
+    medical_condition = fields.String(required=False)
+    regular_medication = fields.String(required=False)
+    allergy = fields.String(required=False)
+    blood_type = fields.String(required=True)
+    date_of_hire = fields.Date(required=True)
 
 class MissionSchema(Schema):
     name = fields.String(required=True)

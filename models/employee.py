@@ -1,6 +1,6 @@
 from extensions import db
 from models.branch import Branch
-from models.departament import Departament
+from models.department import Department
 from models.position import Position
 
 class Employee(db.Model):
@@ -15,8 +15,8 @@ class Employee(db.Model):
     account = db.relationship('Account')
     id_branch = db.Column(db.Integer, db.ForeignKey('branch.id'), nullable=False)
     branch = db.relationship('Branch')
-    id_departament = db.Column(db.Integer, db.ForeignKey('departament.id'), nullable=False)
-    departament = db.relationship('Departament')
+    id_department = db.Column(db.Integer, db.ForeignKey('department.id'), nullable=False)
+    department = db.relationship('Department')
     id_position = db.Column(db.Integer, db.ForeignKey('position.id'), nullable=False)
     position = db.relationship('Position')
     gender = db.Column(db.String(255), nullable=True)
@@ -27,8 +27,7 @@ class Employee(db.Model):
     regular_medication = db.Column(db.String(255), nullable=True)
     active = db.Column(db.Boolean, nullable=True, default=True)
 
-
-    def __init__(self, name, date_of_birth, cpf, id_account, id_branch, id_departament, id_position, address,
+    def __init__(self, name, date_of_birth, cpf, id_account, id_branch, id_department, id_position, address, date_of_hire,
                  phone=None, phone_contact=None, gender=None, blood_type=None, medical_condition=None,
                  allergy=None, regular_medication=None, active=True):
         self.name = name
@@ -38,7 +37,7 @@ class Employee(db.Model):
         self.phone_contact = phone_contact
         self.id_account = id_account
         self.id_branch = id_branch
-        self.id_departament = id_departament
+        self.id_department = id_department
         self.id_position = id_position
         self.gender = gender
         self.address = address
@@ -47,6 +46,7 @@ class Employee(db.Model):
         self.allergy = allergy
         self.regular_medication = regular_medication
         self.active = active
+        self.date_of_hire = date_of_hire
 
     def to_dict(self):
         return {
@@ -58,7 +58,7 @@ class Employee(db.Model):
             "phone_contact": self.phone_contact,
             "account": self.account.to_dict() if self.account else None,
             "branch": self.branch.to_dict() if self.branch else None,
-            "departament": self.departament.to_dict() if self.departament else None,
+            "department": self.department.to_dict() if self.department else None,
             "position": self.position.to_dict() if self.position else None,
             "gender": self.gender,
             "address": self.address,
